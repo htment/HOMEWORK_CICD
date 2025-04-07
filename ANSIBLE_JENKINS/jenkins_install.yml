@@ -1,0 +1,104 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: Add Jenkins keyring
+      get_url:
+        url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+        dest: /usr/share/keyrings/jenkins-keyring.asc
+        mode: '0644'
+      register: keyring_result
+      failed_when: keyring_result is failed
+
+    - name: Add Jenkins repository
+      blockinfile:
+        path: /etc/apt/sources.list.d/jenkins.list
+        create: yes
+        block: |
+          deb-src [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/
+          deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/
+
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+      register: apt_update_result
+      failed_when: apt_update_result is failed
+      retries: 3
+      delay: 10
+
+    - name: Check if default-jdk is installed
+      stat:
+        path: /usr/bin/javac
+      register: javac_check
+
+    - name: Install default-jdk if not present
+      apt:
+        name: default-jdk
+        state: present
+      when: javac_check.stat.exists == false
+
+    - name: Check if wget is installed
+      stat:
+        path: /usr/bin/wget
+      register: wget_check
+
+    - name: Install wget if not present
+      apt:
+        name: wget
+        state: present
+      when: wget_check.stat.exists == false
+
+
+    - name: Check if Jenkins package is available
+      apt:
+        name: jenkins
+        state: latest
+      register: jenkins_check
+      changed_when: false
+
+    - name: Install Jenkins
+      apt:
+        name: jenkins
+        state: present
+      when: jenkins_check.results is defined and jenkins_check.results | length > 0
+
+    - name: Fail if Jenkins package is not available
+      fail:
+        msg: "Jenkins package is not available. Check your network connection and repository configuration."
+      when: jenkins_check.results is defined and jenkins_check.results | length == 0
+
+
+    - name: Start Jenkins service
+      service:
+        name: jenkins
+        state: started
+        enabled: yes
+      register: jenkins_service_result
+      failed_when: jenkins_service_result is failed
+      delegate_to: localhost
+
+    - name: Check Jenkins service status using shell
+      shell: systemctl status jenkins | grep "active (running)"
+      register: jenkins_status_shell
+      changed_when: false
+      delegate_to: localhost
+
+    - name: Fail if Jenkins service is not running
+      fail:
+        msg: "Jenkins service failed to start. Check the Jenkins logs for more details. Shell command output: {{ jenkins_status_shell.stdout }}"
+      when: jenkins_status_shell.rc != 0
+
+    - name: Check if port 8080 is open (optional - may require firewall adjustments)
+      uri:
+        url: http://localhost:8080
+        status_code: 200
+      register: jenkins_port_check
+      ignore_errors: true
+
+    - name: Fail if port 8080 is not open
+      fail:
+        msg: "Jenkins is not accessible on port 8080. Check firewall settings and Jenkins logs."
+      when: jenkins_port_check is failed
+
