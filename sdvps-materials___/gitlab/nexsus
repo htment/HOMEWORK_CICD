@@ -1,4 +1,0 @@
-docker run -d -p 0.0.0.0:8081:8081 -p 0.0.0.0:8082:8082 --name nexus -e INSTALL4J_ADD_VM_PARAMS="-Xms512m -Xmx512m -XX:MaxDirectMemorySize=273m" sonatype/nexus3
-
-посмотреть pass
-docker exec -t nexus bash -c 'cat /nexus-data/admin.password && echo'
