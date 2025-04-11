@@ -15,7 +15,7 @@ https://github.com/htment/HOMEWORK_CICD/tree/master/ANSIBLE_JENKINS
 ![jenkins1](./img/jenkins.png)
 
 Создаем pipeline
-![pipline1](./img/my_pipline%20Config%20[Jenkins].pdf)
+![pipline1](./img/my_piplineConfig.pdf)
 
 устраняем ошибки
 ![jenkins2](./img/error1.png)
@@ -26,14 +26,15 @@ https://github.com/htment/HOMEWORK_CICD/tree/master/ANSIBLE_JENKINS
 ![jenkins7](./img/error6.png)
 
 настраиваем NEXUS 
-![nexus8](nexus_start.png)
+![nexus8](./img/nexus_start.png)
 Вывести пароль администратора для первого логина в Nexus:
 ```
 docker exec -t nexus bash -c 'cat /nexus-data/admin.password && echo'
 ```
 настраиваем учетку и создаем репозеторий
-![nexus_repo](nexus_repo.png)
+![nexus_repo](./img/nexus_repo.png)
 Запускаем джобу
-![jenkins_success](jenkins_success.png)
+![jenkins_success](./img/jenkins_success.png)
 смотрим что в репозитории
-![nexus_add_repo](nexus_add_repo.png)
+
+![nexus_add_repo](./img/nexus_add_repo.png)
