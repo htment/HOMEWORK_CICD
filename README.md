@@ -11,4 +11,29 @@
 **ОТВЕТ**
 1. Устанавливаем Jenkins: 
 ```ansible-playbook -i inventory.ini jenkins_install.yml```
-2. dd
+https://github.com/htment/HOMEWORK_CICD/tree/master/ANSIBLE_JENKINS
+[jenkins](./img/jenkins.png)
+
+Создаем pipeline
+[pipline](./img/my_pipline%20Config%20[Jenkins].pdf)
+
+устраняем ошибки
+[jenkins](./img/error1.png)
+[jenkins](./img/error2.png)
+[jenkins](./img/error3.png)
+[jenkins](./img/error4.png)
+[jenkins](./img/error5.png)
+[jenkins](./img/error6.png)
+
+настраиваем NEXUS 
+![nexus](nexus_start.png)
+Вывести пароль администратора для первого логина в Nexus:
+```
+docker exec -t nexus bash -c 'cat /nexus-data/admin.password && echo'
+```
+настраиваем учетку и создаем репозеторий
+![nexus_repo](nexus_repo.png)
+Запускаем джобу
+![jenkins_success](jenkins_success.png)
+смотрим что в репозитории
+![nexus_add_repo](nexus_add_repo.png)

@@ -5,6 +5,10 @@
 ```bash
 docker run -d -p 192.168.56.10:8081:8081 -p 192.168.56.10:8082:8082 --name nexus -e INSTALL4J_ADD_VM_PARAMS="-Xms512m -Xmx512m -XX:MaxDirectMemorySize=273m" sonatype/nexus3
 ```
+``docker run -d -p 192.168.230.130:8081:8081 -p 192.168.230.130:8082:8082 --name nexus -e INSTALL4J_ADD_VM_PARAMS="-Xms512m -Xmx512m -XX:MaxDirectMemorySize=273m" sonatype/nexus3``
+
+
+
 
 Вывести пароль администратора для первого логина в Nexus:
 ```

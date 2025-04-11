@@ -1,0 +1,19 @@
+Возможно, имелась в виду очистка Docker от всех объектов. Для этого нужно выполнить следующие команды:
+
+Остановить и удалить все контейнеры: 4
+docker stop $(docker ps -a -q) docker rm $(docker ps -a -q). [4](https://cloud.obit.ru/instructions/udalenie-obrazov-kontejnerov-tomov-i-seti-docker/)
+docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)
+
+Здесь docker ps -a -q используется для вывода списка идентификаторов всех контейнеров Docker, а docker rm — для их удаления.  1
+
+Удалить все образы: 4
+ docker rmi -f $(docker images)
+
+
+docker rmi $(docker images -a -q). [4](https://cloud.obit.ru/instructions/udalenie-obrazov-kontejnerov-tomov-i-seti-docker/)
+Удалить все тома: 4
+docker volume rm $(docker volume ls -a -q). [4](https://cloud.obit.ru/instructions/udalenie-obrazov-kontejnerov-tomov-i-seti-docker/)
+Удалить все сети: 4
+docker network rm $(docker network ls -a -q). [4](https://cloud.obit.ru/instructions/udalenie-obrazov-kontejnerov-tomov-i-seti-docker/)
+Перед удалением сети нужно удалить объекты, которые её используют. Чтобы узнать, какие контейнеры используют конкретную сеть, нужно выполнить команду docker ps -f network=[ID сети]. 34
+docker system prune -a # Используйте с осторожностью, удаляет все неиспользуемые ресурсы
