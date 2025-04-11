@@ -12,21 +12,21 @@
 1. Устанавливаем Jenkins: 
 ```ansible-playbook -i inventory.ini jenkins_install.yml```
 https://github.com/htment/HOMEWORK_CICD/tree/master/ANSIBLE_JENKINS
-[jenkins](./img/jenkins.png)
+![jenkins1](./img/jenkins.png)
 
 Создаем pipeline
-[pipline](./img/my_pipline%20Config%20[Jenkins].pdf)
+![pipline1](./img/my_pipline%20Config%20[Jenkins].pdf)
 
 устраняем ошибки
-[jenkins](./img/error1.png)
-[jenkins](./img/error2.png)
-[jenkins](./img/error3.png)
-[jenkins](./img/error4.png)
-[jenkins](./img/error5.png)
-[jenkins](./img/error6.png)
+![jenkins2](./img/error1.png)
+![jenkins3](./img/error2.png)
+![jenkins4](./img/error3.png)
+![jenkins5](./img/error4.png)
+![jenkins6](./img/error5.png)
+![jenkins7](./img/error6.png)
 
 настраиваем NEXUS 
-![nexus](nexus_start.png)
+![nexus8](nexus_start.png)
 Вывести пароль администратора для первого логина в Nexus:
 ```
 docker exec -t nexus bash -c 'cat /nexus-data/admin.password && echo'
