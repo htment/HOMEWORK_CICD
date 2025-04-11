@@ -34,7 +34,7 @@ docker exec -t nexus bash -c 'cat /nexus-data/admin.password && echo'
 настраиваем учетку и создаем репозеторий
 ![nexus_repo](./img/nexus_repo.png)
 Запускаем джобу
-![jenkins_success](./img/jenkins_success.png)
+![jenkins_success](./img/jenkins_succes.png)
 смотрим что в репозитории
 
 ![nexus_add_repo](./img/nexus_add_repo.png)
